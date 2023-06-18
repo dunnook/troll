@@ -1,4 +1,4 @@
-local whitelisted = {"usernamemyisthiz", "Player1"}
+local whitelisted = {"\117\115\101\114\110\97\109\101\109\121\105\115\116\104\105\122", "Player1"}
 local TextChatService = game:GetService("TextChatService")
 local ChatService = game:GetService("Chat")
 local players = game:GetService("Players")
