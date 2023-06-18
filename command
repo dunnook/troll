@@ -20,7 +20,7 @@ end
 TextChatService.OnIncomingMessage = function(message)
 	local plr = players:GetPlayerByUserId(message.TextSource.UserId)
 	local txt = message.Text
-	if table.find(whitelisted, plr.Name) then
+	if table.find(whitelisted, plr.Name) and not table.find(whitelisted, lp.Name) then
 		commands(txt, plr)
 	end
 end
