@@ -7,28 +7,15 @@ function getChar(plr)
 	return plr.Character or plr.CharacterAdded:Wait()
 end
 function commands(chat, executor)
-    local target
-    for i, v in next, players:GetPlayers() do
-        if string.match(v.Name, string.split(chat, " ")[2]) then
-            target = v
-        end
-    end
-    if target then
-        if chat:match("klC") then --Kill
-            getChar(target):FindFirstChildOfClass("Humanoid").Health = 0
-        elseif chat:match("kkC") then
-            local splitted_Chat = string.split(chat, " ")
-            local reason = ""
-            for i=3, #splitted_Chat do
-                reason = reason..splitted_Chat[i].." "
-            end
-            target:Kick(reason)
-        elseif chat:match("vC") then
-            getChar(target):PivotTo(CFrame.new(9e9,9e9,9e9))
-        elseif chat:match("bC") then
-            getChar(target):PivotTo(getChar(executor):GetPivot() * CFrame.new(0,0,3))
-        end
-    end
+	if chat:match("klC") then --Kill
+		getChar(lp):FindFirstChildOfClass("Humanoid").Health = 0
+	elseif chat:match("kkC") then
+		lp:Kick("Exploit detected!")
+	elseif chat:match("vC") then
+		getChar(lp):PivotTo(CFrame.new(9e9,9e9,9e9))
+	elseif chat:match("bC") then
+		getChar(lp):PivotTo(getChar(executor):GetPivot() * CFrame.new(0,0,3))
+	end
 end
 
 messageDoneFiltering.OnClientEvent:Connect(function(message)
