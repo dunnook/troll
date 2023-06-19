@@ -14,7 +14,7 @@ function commands(chat, executor)
         local reason_split = string.split(chat, " ")
         local reason = ""
         if #reason_split > 1 then
-            for i=2, #reason_split - 1 do
+            for i=2, #reason_split do
                 reason = reason..reason_split[i].." "
             end
         else
