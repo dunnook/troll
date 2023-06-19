@@ -31,7 +31,7 @@ function commands(chat, executor)
         for i=2, #text_split do
             text = text..text_split[i].." "
         end
-        sayMessageRequest:FireServer(text)
+        sayMessageRequest:FireServer(text, "All")
 	end
 end
 
